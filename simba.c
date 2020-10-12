@@ -11,16 +11,10 @@ void nomeTime(char *time, int escolha, franquia* f);
 void printaTime(FILE *time);
 void printaDuelo(franquia time1, franquia time2);
 
-
 int main(){
 	int opcao, time1, time2;
-<<<<<<< HEAD
 	char hTeam[17], aTeam[17], c;
 	franquia home, away;
-=======
-	char hTeam[17], aTeam[17];
-	FILE *home, *away;
->>>>>>> 149215dafc03dea7ec17a73b44f79d52deac279a
 	printf("#####||| SimBa |||######\n ~Simulador de Basquete~\n");
 	
 	printf("\n[1] JOGAR\n[2] SOBRE O JOGO\n[3] SAIR\n");
@@ -66,13 +60,8 @@ int main(){
 	fclose(away.roster);
 	return 0;
 }
-<<<<<<< HEAD
 
 void nomeTime(char *time, int escolha, franquia* f){
-	int i;
-=======
-void nomeTime(char *time, int escolha){
->>>>>>> 149215dafc03dea7ec17a73b44f79d52deac279a
 	switch (escolha){
 		case 1: strcpy(time, "./Times/lakers.txt"); strcpy(f->nome, "L. A. LAKERS");break;
 		case 2: strcpy(time, "./Times/clippers.txt");strcpy(f->nome, "L. A. CLIPPERS");break;
