@@ -8,7 +8,7 @@ void printaDuelo(FILE *time1, FILE *time2);
 
 int main(){
 	int opcao, time1, time2;
-	char hTeam[17], aTeam[17], c;
+	char hTeam[17], aTeam[17];
 	FILE *home, *away;
 	printf("#####||| SimBa |||######\n ~Simulador de Basquete~\n");
 	
@@ -17,9 +17,17 @@ int main(){
 	while(1){
 		printf("\n-> Opção: ");
 		scanf("%d", &opcao);
-		if(opcao == 3) return 0;
-		
+		if(opcao == 3){
+			printf("\n\nOBRIGADO POR JOGAR SIMBA!!!! AGRADECEMOS SEU FEEDABACK!!!!\n\n");
+			return 0;
+		}
 		if(opcao == 2){
+			printf("### Criado por Rogerio Albert e Victor Ferraz ###\n\nO SimBa ira simular uma serie melhor de 7 entre 2 times de basquete da NBA de sua escolha.\n");
+			printf("Primeiro, escolha os times e veja a magica acontecer! O SimBa ira mostrar todas a base de dados ");
+			printf("de cada time escolhido no decorrer da serie.\nHighlights surpresa que podem acontecer de maneira aleatoria.\n");
+			printf("Depois que a simulacao terminar, voce podera escolher com quais times a proxima serie sera!\n");
+			printf("Agora, selecione uma opcao do menu (1) para jogar ou (3) para sair\n\n");
+			
 			continue;
 		}
 		
@@ -47,7 +55,6 @@ int main(){
 	fclose(away);
 	return 0;
 }
-
 void nomeTime(char *time, int escolha){
 	switch (escolha){
 		case 1: strcpy(time, "./Times/lakers.txt");break;
