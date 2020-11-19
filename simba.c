@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <time.h>
 typedef struct{
 	char nome[22];
 	FILE* roster;
@@ -10,10 +10,10 @@ typedef struct{
 void nomeTime(char *time, int escolha, franquia* f);
 void printaTime(FILE *time);
 void printaDuelo(franquia time1, franquia time2);
-
+void gameTime(franquia time1, franquia time2);
 int main(){
 	int opcao, time1, time2;
-	char hTeam[17], aTeam[17], c;
+	char hTeam[17], aTeam[17];
 	franquia home, away;
 	printf("#####||| SimBa |||######\n ~Simulador de Basquete~\n");
 	
@@ -54,6 +54,8 @@ int main(){
 		away.roster = fopen(aTeam, "r");
 		
 		printaDuelo(home, away);
+		gameTime(home, away);
+		break;
 	}
 	
 	fclose(home.roster);
@@ -119,4 +121,77 @@ void printaDuelo(franquia time1, franquia time2){
 		printf("\n");
 	}
 }
+void gameTime(franquia time1, franquia time2){
+	//char s, c;
+	//int i = 0, pos = 1, enter=0;
+	int game = 1,winA = 0,winH = 0,score1,score2;
+	
+	srand(time(0));
+	while(winA < 4 || winH < 4){
+		printf("===========================================================================================");
+		printf("\n");
+		printf("\t\t\t\tJOGO %d\n\n",game);
+	
+		score1 = rand() % (115+1-85)+85;
+		score2 = rand() % (115+1-85)+85;
+	
+		while(score1 == score2){
+			printf("\t\t\t*******OVERTIME*******\n\n");
+			score1 = rand() % ((score1+10) + 1 - score1) + score1;
+			score2 = rand() % ((score2+10) + 1 - score2) + score2;		
+		}
+		printf("\t%s \t %d\tX   ", time2.nome, score1);
+		
+		//if(strlen(time2.nome) < 16) printf("\t");
+		printf("%d\t %s\n\n", score2 , time1.nome);
+		
+		if(score1 > score2){
+			winA++;
+		}else{
+			winH++;
+		}
+		if(winA == 4){
+			printf("===========================================================================================\n");
+			printf("\t\t\t%s GANHOU\n",time2.nome);
+			printf("===========================================================================================\n");
+			break;
+		}else if(winH == 4){
+			printf("===========================================================================================\n");
+			printf("\t\t\t%s GANHOU\n",time1.nome);
+			printf("===========================================================================================\n");
+			break;	
+		}
+		game++;
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
