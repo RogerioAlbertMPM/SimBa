@@ -23,15 +23,15 @@ int main(){
 		printf("\n-> Opção: ");
 		scanf("%d", &opcao);
 		if(opcao == 3){
-			printf("\n\nOBRIGADO POR JOGAR SIMBA!!!! AGRADECEMOS SEU FEEDABACK!!!!\n\n");
+			printf("\nOBRIGADO POR JOGAR SimBa!!!! AGRADECEMOS SEU FEEDABACK!!!!\n\n");
 			return 0;
 		}
 		if(opcao == 2){
-			printf("### Criado por Rogerio Albert e Victor Ferraz ###\n\nO SimBa ira simular uma serie melhor de 7 entre 2 times de basquete da NBA de sua escolha.\n");
-			printf("Primeiro, escolha os times e veja a magica acontecer! O SimBa ira mostrar todas a base de dados ");
-			printf("de cada time escolhido no decorrer da serie.\nHighlights surpresa que podem acontecer de maneira aleatoria.\n");
-			printf("Depois que a simulacao terminar, voce podera escolher com quais times a proxima serie sera!\n");
-			printf("Agora, selecione uma opcao do menu (1) para jogar ou (3) para sair\n\n");
+			printf("\n### Criado por Rogerio Albert e Victor Ferraz ###\n\nO SimBa irá simular uma série melhor de 7 entre 2 times de basquete da NBA de sua escolha.\n");
+			printf("Primeiro, escolha os times e veja a mágica acontecer!\nO SimBa irá mostrar todas a base de dados ");
+			printf("de cada time escolhido no decorrer da série.\nHighlights surpresa que podem acontecer de maneira aleatória.\n");
+			printf("Depois que a simulação terminar, você poderá escolher com quais times a próxima série será!\n");
+			printf("Agora, selecione uma opção do menu, [1] para jogar ou [3] para sair.\n");
 			
 			continue;
 		}
@@ -95,24 +95,33 @@ void printaDuelo(franquia time1, franquia time2){
 	int i = 0, pos = 1, enter=0;
 	
 	printf("\n");
-	
-	printf("\t%s \t\tX\t", time2.nome);
-	if(strlen(time2.nome) < 16) printf("\t");
-	printf("%s\n\n", time1.nome);
+
+	printf("%s\t", time2.nome);
+	if(strlen(time2.nome)<16) printf("\t");
+	printf("X\t%s\n\n", time1.nome);
 	
 	while(1){
 		s = fgetc(time2.roster);
 		if(s != '\n'){
-			if(s == EOF) break;
-			
+			if(s == EOF) break;		
 			printf("%c", s);
 			i++;
 			continue;
 		}
-		pos++;
-		printf("\t\t\t");
+		printf("\t");
 		if(i<16) printf("\t");
 		i=0;
+		
+		switch(pos){
+			case 1: printf("SG\t");break;
+			case 2: printf("PG\t");break;
+			case 3: printf("SF\t");break;
+			case 4: printf("PF\t");break;
+			case 5: printf("C\t");break;
+			default: NULL;
+		}
+		pos++;
+		
 		c = fgetc(time1.roster);
 		while(c!='\n'){	
 			printf("%c", c);
