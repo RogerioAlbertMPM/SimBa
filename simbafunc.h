@@ -9,6 +9,7 @@ float ThreePointPercent(int threepointmade, int tpa);
 float FreeThrowsMade(int ftmade, int totalgames);
 float FreeThrowAtp(int fts, int totalgames);
 float FreeThrowPercent( int ftmade,int fta);
+float Assists(int assist, int totalgames);
 float Rebounds(int reb, int totalgames);
 float Turnovers(int turnov,int totalgames);
 float Steals(int steal, int totalgames);

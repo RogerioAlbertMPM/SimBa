@@ -37,22 +37,26 @@ float FreeThrowAtp(int fts, int totalgames){
 float FreeThrowPercent( int ftmade,int fta){
 	return (ftmade/fta)*100;
 }
+//Total number of assists divided by games played
+float Assists(int assist, int totalgames){
+	return (assist*1.0)/totalgames;
+}
 //Total number of rebounds divided by games played.
 float Rebounds(int reb, int totalgames){
-	return reb/totalgames;
+	return (reb*1.0)/totalgames;
 }
 //Total numer of turnovers divided by games played.
 float Turnovers(int turnov,int totalgames){
-	return turnov/totalgames;
+	return (turnov*1.0)/totalgames;
 }//Total steals divided by games played.
 float Steals(int steal, int totalgames){
-	return steal/totalgames;
+	return (steal*1.0)/totalgames;
 }
 //Total blocks divided by games played.
 float Blocks(int block, int totalgames){
-	return block/totalgames;
+	return (block*1.0)/totalgames;
 }
 //Total team fouls divided by games played.
 float TeamFouls(int fouls, int totalgames){
-	return fouls/totalgames;
+	return (fouls*1.0)/totalgames;
 }
