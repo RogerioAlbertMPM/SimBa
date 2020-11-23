@@ -11,6 +11,7 @@ void nomeTime(char *time, int escolha, franquia* f);
 void printaTime(FILE *time);
 void printaDuelo(franquia time1, franquia time2);
 void gameTime(franquia time1, franquia time2);
+
 int main(){
 	int opcao, time1, time2;
 	char hTeam[17], aTeam[17];
