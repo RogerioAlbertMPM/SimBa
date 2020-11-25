@@ -6,10 +6,17 @@
 #include "simbafunc.h"
 
 typedef struct{
+	char nome[30];
+	int score;
+}jogador;
+
+typedef struct{
 	char nome[22];
 	FILE* roster;
+	jogador TIME[5];	
 }franquia;
 
+void zeraString(char* s);
 void nomeTime(char *time, int escolha, franquia* f);
 void printaTime(FILE *time);
 void printaDuelo(franquia time1, franquia time2);
@@ -67,24 +74,64 @@ int main(){
 	return 0;
 }
 
+void zeraString(char* s){
+	int i = 0;
+	while(*(s+i)!='\0'){
+		*(s+i) = '\0';
+		i++;
+	}
+}
+
 void nomeTime(char *time, int escolha, franquia* f){
 	switch (escolha){
-		case 1: strcpy(time, "./Times/lakers.txt"); strcpy(f->nome, "L. A. LAKERS");break;
-		case 2: strcpy(time, "./Times/clippers.txt");strcpy(f->nome, "L. A. CLIPPERS");break;
-		case 3: strcpy(time, "./Times/nuggets.txt");strcpy(f->nome, "DENVER NUGGETS");break;
-		case 4: strcpy(time, "./Times/rockets.txt");strcpy(f->nome, "HOUSTON ROCKETS");break;
-		case 5: strcpy(time, "./Times/okc.txt");strcpy(f->nome, "OKLAHOMA CITY THUNDER");break;
-		case 6: strcpy(time, "./Times/jazz.txt");strcpy(f->nome, "UTAH JAZZ");break;
-		case 7: strcpy(time, "./Times/mavericks.txt");strcpy(f->nome, "DALLAS MAVERICKS");break;
-		case 8: strcpy(time, "./Times/trailblazers.txt");strcpy(f->nome, "PORTLAND TRAIL BLAZERS");break;
-		case 9: strcpy(time, "./Times/suns.txt");strcpy(f->nome, "PHOENIX SUNS");break;
-		case 10: strcpy(time, "./Times/bucks.txt");strcpy(f->nome, "MILWAUKEE BUCKS");break;
-		case 11: strcpy(time, "./Times/raptors.txt");strcpy(f->nome, "TORONTO RAPTORS");break;
-		case 12: strcpy(time, "./Times/celtics.txt");strcpy(f->nome, "BOSTON CELTICS");break;
-		case 13: strcpy(time, "./Times/pacers.txt");strcpy(f->nome, "INDIANA PACERS");break;
-		case 14: strcpy(time, "./Times/heat.txt");strcpy(f->nome, "MIAMI HEAT");break;
-		case 15: strcpy(time, "./Times/76ers.txt");strcpy(f->nome, "PHILADELPHIA 76ERS");break;
-		case 16: strcpy(time, "./Times/magic.txt");strcpy(f->nome, "ORLANDO MAGIC");break;
+		case 1:strcpy(time, "./Times/lakers.txt"); 
+				strcpy(f->nome, "L. A. LAKERS");
+				break;
+		case 2:strcpy(time, "./Times/clippers.txt");
+				strcpy(f->nome, "L. A. CLIPPERS");
+				break;
+		case 3:strcpy(time, "./Times/nuggets.txt");
+				strcpy(f->nome, "DENVER NUGGETS");
+				break;
+		case 4:strcpy(time, "./Times/rockets.txt");
+				strcpy(f->nome, "HOUSTON ROCKETS");
+				break;
+		case 5:strcpy(time, "./Times/okc.txt");
+				strcpy(f->nome, "OKLAHOMA CITY THUNDER");
+				break;
+		case 6:strcpy(time, "./Times/jazz.txt");
+				strcpy(f->nome, "UTAH JAZZ");
+				break;
+		case 7:strcpy(time, "./Times/mavericks.txt");
+				strcpy(f->nome, "DALLAS MAVERICKS");
+				break;
+		case 8: strcpy(time, "./Times/trailblazers.txt");
+				strcpy(f->nome, "PORTLAND TRAIL BLAZERS");
+				break;
+		case 9:strcpy(time, "./Times/suns.txt");
+				strcpy(f->nome, "PHOENIX SUNS");
+				break;
+		case 10:strcpy(time, "./Times/bucks.txt");
+				strcpy(f->nome, "MILWAUKEE BUCKS");
+				break;
+		case 11:strcpy(time, "./Times/raptors.txt");
+				strcpy(f->nome, "TORONTO RAPTORS");
+				break;
+		case 12:strcpy(time, "./Times/celtics.txt");
+				strcpy(f->nome, "BOSTON CELTICS");
+				break;
+		case 13:strcpy(time, "./Times/pacers.txt");
+				strcpy(f->nome, "INDIANA PACERS");
+				break;
+		case 14:strcpy(time, "./Times/heat.txt");
+				strcpy(f->nome, "MIAMI HEAT");
+				break;
+		case 15:strcpy(time, "./Times/76ers.txt");
+				strcpy(f->nome, "PHILADELPHIA 76ERS");
+				break;
+		case 16:strcpy(time, "./Times/magic.txt");
+				strcpy(f->nome, "ORLANDO MAGIC");
+				break;
 		default: NULL;
 	}
 }
@@ -134,9 +181,60 @@ void printaDuelo(franquia time1, franquia time2){
 		printf("\n");
 	}
 }
+
+void distribPontos(int pontosPartida,franquia *team){
+	int i = 0, k, pontos, j;
+	char playerName[30], ppg[3], s;
+	char playerFile[13];
+	FILE *player;
+	
+	if(pontosPartida > 0){
+		while(i < 5){
+			
+			zeraString(playerName);
+			k = 0;
+			j=0;
+			
+			while((s=fgetc(team->roster))!= '\n'){ //pegar o nome do jogador sem espaco pra poder abrir o arquivo
+			 	team->TIME[i].nome[j] = s;
+			 	if(s != ' '){
+			 		playerName[k] = s;
+					k++;
+			 	}
+			 	j++;
+			}
+		
+			strcpy(playerFile, "./Jogadores/");
+			strcat(playerName, ".txt");
+			strcat(playerFile, playerName); //colocar o nome certo pro acesso ao arquivo do jogador
+			player = fopen(playerFile, "r");
+		
+			k=0;
+			zeraString(ppg);
+			while((s=fgetc(player))!= '\n'){
+				ppg[k] = s;
+				k++;
+			}
+			
+			do{
+				pontos = atoi(ppg) + pow(-1, rand())*(rand()%(6+1-0)+0);
+				if(atoi(ppg) - 6 > pontosPartida) pontos = 2;
+			}while(pontos > pontosPartida);	
+
+			pontosPartida -= pontos;
+			team->TIME[i].score += pontos;
+			if(pontosPartida == 0) return;
+			
+			i++;
+		}
+	}
+	
+	rewind(team->roster);
+	fclose(player);
+	distribPontos(pontosPartida, team);
+}
+
 void gameTime(franquia time1, franquia time2){
-	//char s, c;
-	//int i = 0, pos = 1, enter=0;
 	int game = 1,winA = 0,winH = 0,score1,score2;
 	int assists1, assists2,rebote1,rebote2,turno1,turno2,steals1,steals2;
 	int blocks1,blocks2,fouls1,fouls2;
@@ -152,12 +250,12 @@ void gameTime(franquia time1, franquia time2){
 	
 		score1 = rand() % (115+1-85)+85;
 		score2 = rand() % (115+1-85)+85;
-	
 		while(score1 == score2){
 			printf("\t\t\t*******OVERTIME*******\n\n");
 			score1 = rand() % ((score1+10) + 1 - score1) + score1;
 			score2 = rand() % ((score2+10) + 1 - score2) + score2;		
 		}
+		
 		printf("\t%s \t %d\tX   ", time2.nome, score1);
 		
 		//if(strlen(time2.nome) < 16) printf("\t");
@@ -181,12 +279,21 @@ void gameTime(franquia time1, franquia time2){
 		fouls1 = 21 + pow(-1,rand())*(rand() % (3 + 1 - 0) + 0);
 		fouls2 = 21 + pow(-1,rand())*(rand() % (3 + 1 - 0) + 0);
 		
+		
 		printf("\tASSISTS1 = %d\t\t ASSISTS2 = %d\n\n",assists1,assists2);
 		printf("\tREBOUNDS1 = %d\t\t REBOUNDS2 = %d\n\n",rebote1,rebote2);
 		printf("\tTURNOVER1 = %d\t\t TURNOVER2 = %d\n\n",turno1,turno2);
 		printf("\tSTEALS1 = %d\t\t STEALS2 = %d\n\n",steals1,steals2);
 		printf("\tBLOCKS1 = %d\t\t BLOCKS2 = %d\n\n",blocks1,blocks2);
 		printf("\tFOULS1 = %d\t\t FOULS2 = %d\n\n",fouls1,fouls2);
+		
+		rewind(time1.roster);
+		rewind(time2.roster);
+		
+		distribPontos(score1, &time1);
+		distribPontos(score2, &time2);
+		
+		for(int r = 0; r<5;r++) printf("\t%s --- %d\tPONTOS\t%s --- %d\n", time1.TIME[r].nome, time1.TIME[r].score, time2.TIME[r].nome, time2.TIME[r].score);
 		
 		totalPT1 += score1;
 		totalPT2 += score2; 
@@ -235,48 +342,4 @@ void gameTime(franquia time1, franquia time2){
 		
 	}
 }
-// 54.7field goals attempt per game
-// 28.7 field goals made per game
-// == 52.4% shots made
-// 34.1 3-point attempt
-// 12.2 3-point made
-// == 35.8% 3-point
-// 23.1 free throw attempt
-// 17.9 free throw made
-// 77.3% free throw made
-// 44.8 reb per game - finished
-// 24.4 assists per game - finished
-// 14.5 turnover per game - finished
-// 7.6 steals per game - finished
-// 4.9 blocks per game - finished
-// 20.8 team fouls per game - finished
-
-// caracteristica geral individual: Dividir jogo a jogo pra cada jogador
-// usar recursividade + arquivo pra cada jogador
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
