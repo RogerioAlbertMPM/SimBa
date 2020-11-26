@@ -16,6 +16,7 @@ typedef struct{
 	jogador TIME[5];	
 }franquia;
 
+void iniciaPontos(franquia *time);
 void zeraString(char* s);
 void nomeTime(char *time, int escolha, franquia* f);
 void printaTime(FILE *time);
@@ -82,6 +83,13 @@ void zeraString(char* s){
 	}
 }
 
+void iniciaPontos(franquia *time){
+	int i;
+	for(i=0;i<5;i++){
+		time->TIME[i].score = 0;
+	}
+}
+
 void nomeTime(char *time, int escolha, franquia* f){
 	switch (escolha){
 		case 1:strcpy(time, "./Times/lakers.txt"); 
@@ -138,6 +146,7 @@ void nomeTime(char *time, int escolha, franquia* f){
 
 void printaTime(FILE *time){
 	char s;
+	rewind(time);
 	while((s=fgetc(time))!=EOF) printf("%c",s);
 }
 
@@ -151,6 +160,8 @@ void printaDuelo(franquia time1, franquia time2){
 	if(strlen(time2.nome)<16) printf("\t");
 	printf("X\t%s\n\n", time1.nome);
 	
+	rewind(time1.roster);
+	rewind(time2.roster);
 	while(1){
 		s = fgetc(time2.roster);
 		if(s != '\n'){
@@ -188,45 +199,42 @@ void distribPontos(int pontosPartida,franquia *team){
 	char playerFile[13];
 	FILE *player;
 	
-	if(pontosPartida > 0){
-		while(i < 5){
+	while(i < 5){
 			
-			zeraString(playerName);
-			k = 0;
-			j=0;
-			
-			while((s=fgetc(team->roster))!= '\n'){ //pegar o nome do jogador sem espaco pra poder abrir o arquivo
-			 	team->TIME[i].nome[j] = s;
-			 	if(s != ' '){
-			 		playerName[k] = s;
-					k++;
-			 	}
-			 	j++;
-			}
-		
-			strcpy(playerFile, "./Jogadores/");
-			strcat(playerName, ".txt");
-			strcat(playerFile, playerName); //colocar o nome certo pro acesso ao arquivo do jogador
-			player = fopen(playerFile, "r");
-		
-			k=0;
-			zeraString(ppg);
-			while((s=fgetc(player))!= '\n'){
-				ppg[k] = s;
+		zeraString(playerName);
+		k = 0;
+		j=0;	
+		while((s=fgetc(team->roster))!= '\n'){ //pegar o nome do jogador sem espaco pra poder abrir o arquivo
+		 	team->TIME[i].nome[j] = s;
+		 	if(s != ' '){
+				playerName[k] = s;
 				k++;
 			}
-			
-			do{
-				pontos = atoi(ppg) + pow(-1, rand())*(rand()%(6+1-0)+0);
-				if(atoi(ppg) - 6 > pontosPartida) pontos = 2;
-			}while(pontos > pontosPartida);	
-
-			pontosPartida -= pontos;
-			team->TIME[i].score += pontos;
-			if(pontosPartida == 0) return;
-			
-			i++;
+			j++;
 		}
+		
+		strcpy(playerFile, "./Jogadores/");
+		strcat(playerName, ".txt");
+		strcat(playerFile, playerName); //colocar o nome certo pro acesso ao arquivo do jogador
+		player = fopen(playerFile, "r");
+		
+		k=0;
+		zeraString(ppg);
+		while((s=fgetc(player))!= '\n'){
+			ppg[k] = s;
+			k++;
+		}
+			
+		do{
+			pontos = atoi(ppg) + pow(-1, rand())*(rand()%(6+1-0)+0);
+			if(atoi(ppg) - 6 >= pontosPartida)pontos = 1;
+		}while(pontos > pontosPartida);	
+
+		pontosPartida -= pontos;
+		team->TIME[i].score += pontos;
+		if(pontosPartida == 0) return;
+		
+		i++;
 	}
 	
 	rewind(team->roster);
@@ -290,9 +298,12 @@ void gameTime(franquia time1, franquia time2){
 		rewind(time1.roster);
 		rewind(time2.roster);
 		
+		iniciaPontos(&time1);
+		iniciaPontos(&time2);
+		
 		distribPontos(score1, &time1);
 		distribPontos(score2, &time2);
-		
+
 		for(int r = 0; r<5;r++) printf("\t%s --- %d\tPONTOS\t%s --- %d\n", time1.TIME[r].nome, time1.TIME[r].score, time2.TIME[r].nome, time2.TIME[r].score);
 		
 		totalPT1 += score1;
