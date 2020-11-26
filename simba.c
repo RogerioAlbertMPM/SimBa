@@ -31,6 +31,7 @@ int main(){
 	
 	printf("\n[1] JOGAR\n[2] SOBRE O JOGO\n[3] SAIR\n");
 	
+	//MENU SimBa
 	while(1){
 		printf("\n-> Opção: ");
 		scanf("%d", &opcao);
@@ -68,7 +69,7 @@ int main(){
 		printaDuelo(home, away);
 		gameTime(home, away);
 		break;
-	}
+	}// FIM MENU SimBa
 	
 	fclose(home.roster);
 	fclose(away.roster);
@@ -82,7 +83,7 @@ void zeraString(char* s){
 		i++;
 	}
 }
-
+//INICIA PONTEIROS DOS PONTOS DE CADA JOGADOR
 void iniciaPontos(franquia *time){
 	int i;
 	for(i=0;i<5;i++){
@@ -149,7 +150,7 @@ void printaTime(FILE *time){
 	rewind(time);
 	while((s=fgetc(time))!=EOF) printf("%c",s);
 }
-
+// PRINTA O CONFRONTO ANTES DE COMECAR OS JOGOS
 void printaDuelo(franquia time1, franquia time2){
 	char s, c;
 	int i = 0, pos = 1, enter=0;
@@ -192,7 +193,7 @@ void printaDuelo(franquia time1, franquia time2){
 		printf("\n");
 	}
 }
-
+// DISTRIBUI OS PONTOS GERADOS PACAR CADA JOGADOR
 void distribPontos(int pontosPartida,franquia *team){
 	int i = 0, k, pontos, j;
 	char playerName[30], ppg[3], s;
@@ -241,16 +242,16 @@ void distribPontos(int pontosPartida,franquia *team){
 	fclose(player);
 	distribPontos(pontosPartida, team);
 }
-
+// A SIMULACAO
 void gameTime(franquia time1, franquia time2){
 	int game = 1,winA = 0,winH = 0,score1,score2;
 	int assists1, assists2,rebote1,rebote2,turno1,turno2,steals1,steals2;
 	int blocks1,blocks2,fouls1,fouls2;
 	int totalPT1 = 0,totalPT2 = 0,totalAS1 = 0,totalAS2 = 0,totalREB1 = 0,totalREB2 = 0;
 	int totalTURN1 = 0,totalTURN2 = 0,totalSTL1 = 0,totalSTL2 = 0,totalBLK1 = 0,totalBLK2 = 0,totalFL1 = 0,totalFL2 = 0;
-	
+	int FGa1,FGa2,TPa1,TPa2,FTa1,FTa2,FGm1 = 0,FGm2 = 0,TPm1 = 0,TPm2 = 0,FTm1 = 0,FTm2 = 0,TwoPm1 = 0,TwoPm2 = 0;
 	srand(time(0));
-	
+	//GERA OS PONTOS E AS STATS
 	while(winA < 4 || winH < 4){
 		printf("===========================================================================================");
 		printf("\n");
@@ -258,6 +259,8 @@ void gameTime(franquia time1, franquia time2){
 	
 		score1 = rand() % (115+1-85)+85;
 		score2 = rand() % (115+1-85)+85;
+		
+		//CASO EMPATE
 		while(score1 == score2){
 			printf("\t\t\t*******OVERTIME*******\n\n");
 			score1 = rand() % ((score1+10) + 1 - score1) + score1;
@@ -265,8 +268,6 @@ void gameTime(franquia time1, franquia time2){
 		}
 		
 		printf("\t%s \t %d\tX   ", time2.nome, score1);
-		
-		//if(strlen(time2.nome) < 16) printf("\t");
 		printf("%d\t %s\n\n", score2 , time1.nome);
 		
 		if(score1 > score2){
@@ -274,6 +275,7 @@ void gameTime(franquia time1, franquia time2){
 		}else{
 			winH++;
 		}
+		//GERA AS STATS FORA PONTOS
 		assists1 = 24 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
 		assists2 = 24 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
 		rebote1 = 45 + pow(-1,rand())*(rand() % (6 + 1 - 0) + 0);
@@ -286,26 +288,70 @@ void gameTime(franquia time1, franquia time2){
 		blocks2 = 5 + pow(-1,rand())*(rand() % (2 + 1 - 0) + 0);
 		fouls1 = 21 + pow(-1,rand())*(rand() % (3 + 1 - 0) + 0);
 		fouls2 = 21 + pow(-1,rand())*(rand() % (3 + 1 - 0) + 0);
+		FGa1 = 88 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);		
+		FGa2 = 88 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
+		FTa1 = 22 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
+		FTa2 = 22 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
+		TPa1 = (FGa1*38)/100;		
+		TPa2 = (FGa2*38)/100;
 		
-		
+		printf("OPAAAA\n");		
+		while(TwoPm1*2 + TPm1*3 + FTm1 <= score1){
+			FGm1 = 41 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
+			FTm1 = 17 + pow(-1,rand())*(rand() % (2 + 1 - 0) + 0);
+			TPm1 = (FGm1*28)/100;
+			TwoPm1 = FGm1 - TPm1;
+		} 
+		printf("OPAAAAA2\n");
+		while(TwoPm2*2 + TPm2*3 + FTm2 <= score2){
+			FGm2 = 41 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
+			FTm2 = 17 + pow(-1,rand())*(rand() % (2 + 1 - 0) + 0);
+			TPm2 = (FGm2*28)/100;
+			TwoPm2 = FGm2 - TPm2;
+		} 		
+		if(((TwoPm1*2 + TPm1*3 + FTm1)-score1) % 10 == 0){			
+			TwoPm1 -= (((TwoPm1*2 + TPm1*3 + FTm1)-score1)/10) * 2;
+			TPm1 -= (((TwoPm1*2 + TPm1*3 + FTm1)-score1)/10) * 2;			
+		}else{
+			FTm1 -= ((TwoPm1*2 + TPm1*3 + FTm1)-score1) - (10 * (((TwoPm1*2 + TPm1*3 + FTm1)-score1)/10));
+			TwoPm1 -= (((TwoPm1*2 + TPm1*3 + FTm1)-score1)/10) * 2;
+			TPm1 -= (((TwoPm1*2 + TPm1*3 + FTm1)-score1)/10) * 2;
+		}
+		if(((TwoPm2*2 + TPm2*3 + FTm2)-score2) % 10 == 0){			
+			TwoPm2 -= (((TwoPm2*2 + TPm2*3 + FTm2)-score2)/10) * 2;
+			TPm2 -= (((TwoPm2*2 + TPm2*3 + FTm2)-score2)/10) * 2;			
+		}else{
+			FTm2 -= ((TwoPm2*2 + TPm2*3 + FTm2)-score2) - (10 * (((TwoPm2*2 + TPm2*3 + FTm2)-score2)/10));
+			TwoPm2 -= (((TwoPm2*2 + TPm2*3 + FTm2)-score2)/10) * 2;
+			TPm2 -= (((TwoPm2*2 + TPm2*3 + FTm2)-score2)/10) * 2;
+		}
 		printf("\tASSISTS1 = %d\t\t ASSISTS2 = %d\n\n",assists1,assists2);
 		printf("\tREBOUNDS1 = %d\t\t REBOUNDS2 = %d\n\n",rebote1,rebote2);
 		printf("\tTURNOVER1 = %d\t\t TURNOVER2 = %d\n\n",turno1,turno2);
 		printf("\tSTEALS1 = %d\t\t STEALS2 = %d\n\n",steals1,steals2);
 		printf("\tBLOCKS1 = %d\t\t BLOCKS2 = %d\n\n",blocks1,blocks2);
 		printf("\tFOULS1 = %d\t\t FOULS2 = %d\n\n",fouls1,fouls2);
+		printf("\tFGA1 = %d\t\t FGA2 = %d\n\n",FGa1,FGa2);
+		printf("\tFTa1 = %d\t\t FTa2 = %d\n\n",FTa1,FTa2);
+		printf("\tTPa1 = %d\t\t TPa2 = %d\n\n",TPa1,TPa2);
+		printf("\tFGm1 = %d\t\t FGm2 = %d\n\n",FGm1,FGm2);
+		printf("\t2Pm1 = %d\t\t 2Pm2 = %d\n\n",TwoPm1,TwoPm2);
+		printf("\tFTm1 = %d\t\t FTm2 = %d\n\n",FTm1,FTm2);
+		printf("\t3Pm1 = %d\t\t 3Pm2 = %d\n\n",TPm1,TPm2);
 		
+		//RESETA PONTEIRO DOS ARQUIVOS DOS TIMES
 		rewind(time1.roster);
 		rewind(time2.roster);
-		
+		//INICIA PARA CONTAGEM DE PONTOS INDIVIDUAIS
 		iniciaPontos(&time1);
 		iniciaPontos(&time2);
-		
+		//DRISTRIBUIR OS PONTOS ENTRE OS JOGADORES
 		distribPontos(score1, &time1);
 		distribPontos(score2, &time2);
-
+		
 		for(int r = 0; r<5;r++) printf("\t%s --- %d\tPONTOS\t%s --- %d\n", time1.TIME[r].nome, time1.TIME[r].score, time2.TIME[r].nome, time2.TIME[r].score);
 		
+		//ACOMPANHAMENTO DAS STATS JOGO POR JOGO
 		totalPT1 += score1;
 		totalPT2 += score2; 
 		totalAS1 += assists1; 
@@ -321,7 +367,7 @@ void gameTime(franquia time1, franquia time2){
 		totalFL1 += fouls1; 
 		totalFL2 += fouls2; 
 		 
-		
+		//CONDICAO DE VITORIA + STATS GERAIS
 		if(winA == 4){
 			printf("===========================================================================================\n");
 			printf("\t\t%s GANHOU (%d-%d)\n",time2.nome,winA,winH);
