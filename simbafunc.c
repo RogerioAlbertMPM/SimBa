@@ -3,11 +3,11 @@
 
 //Total made shots oth­er than free throws divid­ed by games played.
 float FieldGoalMade(int shotsmade, int totalgames){
-	return shotsmade/totalgames;
+	return (shotsmade*1.0)/totalgames;
 }
 //Total shots attempt­ed oth­er than free throws divid­ed by games played .
 float FieldGoalAtp(int shots, int totalgames){
-	return shots/totalgames;
+	return (shots*1.0)/totalgames;
 }
 //Total shots made oth­er than free throws divid­ed by field goal attempts.
 float FieldGoalPercent(int shotsmade, int fga){
@@ -15,11 +15,11 @@ float FieldGoalPercent(int shotsmade, int fga){
 }
 //Total 3-point­ers made divid­ed by games played.
 float ThreePointers(int threepointmade, int totalgames){
-	return threepointmade/totalgames;
+	return (threepointmade*1.0)/totalgames;
 }
 //Total 3-point­ers attempt­ed divid­ed by games played.
 float ThreePointAtp(int threepoint, int totalgames){
-	return threepoint/totalgames;
+	return (threepoint*1.0)/totalgames;
 }
 //Total 3-point shots made divid­ed by 3-point field goal attempts.
 float ThreePointPercent(int threepointmade, int tpa){
@@ -27,11 +27,11 @@ float ThreePointPercent(int threepointmade, int tpa){
 }
 //Total free throws made divid­ed by games played.
 float FreeThrowsMade(int ftmade, int totalgames){
-	return ftmade/totalgames;
+	return (ftmade*1.0)/totalgames;
 }
 //Total free throws attempt­ed divid­ed by games played.
 float FreeThrowAtp(int fts, int totalgames){
-	return fts/totalgames;
+	return (fts*1.0)/totalgames;
 }
 //Total free throws attempt­ed divid­ed by games played.
 float FreeThrowPercent( int ftmade,int fta){
