@@ -43,17 +43,17 @@ void menu(){
 	char hTeam[17], aTeam[17];
 	franquia home, away;
 	
-	if(opcao == 3){
+	/*if(opcao == 3){
 		printf("\nOBRIGADO POR JOGAR SimBa!!!! AGRADECEMOS SEU FEEDABACK!!!!\n\n");
 		return ;
-	}
+	}*/
 	printf("#####||| SimBa |||######\n ~Simulador de Basquete~\n");
 	
-	printf("\n[1] JOGAR\n[2] SOBRE O JOGO\n[3] SAIR\n");
-	printf("\n-> Opção: ");
-	scanf("%d", &opcao);
-	
 	while(1){
+		
+		printf("\n[1] JOGAR\n[2] SOBRE O JOGO\n[3] SAIR\n");
+		printf("\n-> Opção: ");
+		scanf("%d", &opcao);
 		
 		if(opcao == 3){
 			printf("\nOBRIGADO POR JOGAR SimBa!!!! AGRADECEMOS SEU FEEDABACK!!!!\n\n");
@@ -65,8 +65,6 @@ void menu(){
 			printf("de cada time escolhido no decorrer da série.\nHighlights surpresa que podem acontecer de maneira aleatória.\n");
 			printf("Depois que a simulação terminar, você poderá escolher com quais times a próxima série será!\n");
 			printf("Agora, selecione uma opção do menu, [1] para jogar ou [3] para sair.\n");
-			printf("\n-> Opção: ");
-			scanf("%d", &opcao);
 			continue;
 		}
 		
@@ -89,7 +87,7 @@ void menu(){
 		
 		printaDuelo(home, away);
 		gameTime(home, away);
-		break;
+		//break;
 	}
 	
 	fclose(home.roster);
@@ -118,7 +116,6 @@ void menu2(franquia time1,franquia time2,int game,int totalPT1,int totalPT2,int 
 	printf("\t3Pm1 = %.1f\t\t 3Pm2 = %.1f\n\n",ThreePointers(totalTPm1,game),ThreePointers(totalTPm2,game));
 	printf("===========================================================================================");	
 	opcao = 3;
-	menu();
 }
 void zeraString(char* s){
 	int i = 0;
@@ -782,15 +779,11 @@ void gameTime(franquia time1, franquia time2){
 			printf("\tBLK1: %.1f\t\t BLK2: %.1f\n\n",Blocks(totalBLK1,game),Blocks(totalBLK2,game));
 			printf("\tPF1: %.1f\t\t PF2: %.1f\n\n",TeamFouls(totalFL1,game),TeamFouls(totalFL2,game));
 			printf("===========================================================================================\n\n");
-			printf("[1] Estatisticas avancadas da serie\n[2] Sair da simulacao ");
+			printf("[1] Estatisticas avancadas da serie\n[2] Voltar para o menu ");
 			printf("\n-> Opção: ");
 			scanf("%d", &opcao);
 			if(opcao == 1){
 				menu2(time1,time2,game,totalPT1,totalPT2,totalAS1,totalAS2,totalREB1,totalREB2,totalTURN1,totalTURN2,totalSTL1,totalSTL2,totalBLK1,totalBLK2,totalFL1,totalFL2,totalFGa1,totalFGa2,totalFTa1,totalFTa2,totalTPa1,totalTPa2,totalFGm1,totalFGm2,totalFTm1,totalFTm2,totalTPm1,totalTPm2);
-			}else{
-				opcao = 3;
-				menu();
-				break;
 			}
 			break;
 		}else if(winH == 4){
@@ -804,15 +797,11 @@ void gameTime(franquia time1, franquia time2){
 			printf("\tBLK1: %.1f\t\t BLK2: %.1f\n\n",Blocks(totalBLK1,game),Blocks(totalBLK2,game));
 			printf("\tPF1: %.1f\t\t PF2: %.1f\n\n",TeamFouls(totalFL1,game),TeamFouls(totalFL2,game));
 			printf("===========================================================================================\n");
-			printf("[1] Estatisticas avancadas da serie\n[2] Sair da simulacao ");
+			printf("[1] Estatisticas avancadas da serie\n[2] Voltar para o menu ");
 			printf("\n-> Opção: ");
 			scanf("%d", &opcao);
-			if(opcao == 1){
-				menu2(time1,time2,game,totalPT1,totalPT2,totalAS1,totalAS2,totalREB1,totalREB2,totalTURN1,totalTURN2,totalSTL1,totalSTL2,totalBLK1,totalBLK2,totalFL1,totalFL2,totalFGa1,totalFGa2,totalFTa1,totalFTa2,totalTPa1,totalTPa2,totalFGm1,totalFGm2,totalFTm1,totalFTm2,totalTPm1,totalTPm2);
-			}else{
-				opcao = 3;
-				menu();
-				break;
+			if(opcao == 1){		
+	menu2(time1,time2,game,totalPT1,totalPT2,totalAS1,totalAS2,totalREB1,totalREB2,totalTURN1,totalTURN2,totalSTL1,totalSTL2,totalBLK1,totalBLK2,totalFL1,totalFL2,totalFGa1,totalFGa2,totalFTa1,totalFTa2,totalTPa1,totalTPa2,totalFGm1,totalFGm2,totalFTm1,totalFTm2,totalTPm1,totalTPm2);
 			}
 			break;	
 		}
