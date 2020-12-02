@@ -51,6 +51,9 @@ void menu(){
 	
 	while(1){
 		
+		time1 = 0;
+		time2 = -1;
+		
 		printf("\n[1] JOGAR\n[2] SOBRE O JOGO\n[3] SAIR\n");
 		printf("\n-> Opção: ");
 		scanf("%d", &opcao);
@@ -87,11 +90,10 @@ void menu(){
 		
 		printaDuelo(home, away);
 		gameTime(home, away);
-		//break;
-	}
 	
-	fclose(home.roster);
-	fclose(away.roster);
+		fclose(home.roster);
+		fclose(away.roster);
+	}
 }
 //MENU ESTATISTICAS AVANCADAS
 void menu2(franquia time1,franquia time2,int game,int totalPT1,int totalPT2,int totalAS1,int totalAS2,int totalREB1,int totalREB2,int totalTURN1,int totalTURN2,int totalSTL1,int totalSTL2,int totalBLK1,int totalBLK2,int totalFL1,int totalFL2,int totalFGa1,int totalFGa2,int totalFTa1,int totalFTa2,int totalTPa1,int totalTPa2,int totalFGm1,int totalFGm2,int totalFTm1,int totalFTm2,int totalTPm1,int totalTPm2){
