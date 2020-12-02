@@ -666,8 +666,8 @@ void gameTime(franquia time1, franquia time2){
 			TPm1 -= (extraPoints1/10) * 2;
 			if(FTm1 < 0){
 				FTm1 = 5;
-				TPm1--;
-				TwoPm1--;
+				TPm1 = TPm1 - 1;
+				TwoPm1 = TwoPm1 - 1;
 			}
 		}
 		if(extraPoints2 % 10 == 0){			
@@ -679,8 +679,8 @@ void gameTime(franquia time1, franquia time2){
 			TPm2 -= (extraPoints2/10) * 2;
 			if(FTm2 < 0){
 				FTm2 = 5;
-				TPm2--;
-				TwoPm2--;
+				TPm2 = TPm2 - 1;
+				TwoPm2 = TwoPm2 - 1;
 			}
 		}
 		
