@@ -7,12 +7,15 @@
 
 //ORGANIZA O NOME DOS JOGADORES DOS TIMES ESCOLHIDOS
 void nomes(franquia* f){
+	char s[35];
 	int i;
-	for(i=0;i<5;i++) zeraString(f->TIME[i].nome);
-	
+
 	i=0;
 	while(i<5){
-		fscanf(f->roster, "%[^\n]%*c", f->TIME[i].nome);
+		fscanf(f->roster, "%[^\n]%*c", s);
+		int tam = strlen(s);
+		f->TIME[i].nome = (char *) malloc(tam*sizeof(char));
+		strcpy(f->TIME[i].nome, s);
 		i++;
 	}
 }
