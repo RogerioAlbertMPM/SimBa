@@ -25,7 +25,6 @@ void distribRoubos(int roubosPartida,franquia *team);
 void distribPontos(int pontosPartida,franquia *team);
 void distribAssistencias(int assitenciasPartida,franquia *team);
 void nomeTime(char *time, int escolha, franquia* f);
-void printaTime(FILE *time);
 void printaDuelo(franquia time1, franquia time2);
 void gameTime(franquia time1, franquia time2);
 //FUNCOES PARA ESTATISTICAS ESPECIFICAS
