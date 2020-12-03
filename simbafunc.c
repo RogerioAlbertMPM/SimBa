@@ -5,6 +5,7 @@
 #include <math.h>
 #include "simbafunc.h"
 
+//ORGANIZA O NOME DOS JOGADORES DOS TIMES ESCOLHIDOS
 void nomes(franquia* f){
 	int i;
 	for(i=0;i<5;i++) zeraString(f->TIME[i].nome);
@@ -15,8 +16,6 @@ void nomes(franquia* f){
 		i++;
 	}
 }
-
-
 //TOTAL DE ACERTOS SER SER LANCES LIVRES POR JOGOS JOGADOS
 float FieldGoalMade(int shotsmade, int totalgames){
 	return (shotsmade*1.0)/totalgames;
@@ -70,7 +69,7 @@ float TeamFouls(int fouls, int totalgames){
 //MENU ESTATISTICAS AVANCADAS
 void menu2(franquia time1,franquia time2,int game,int totalPT1,int totalPT2,int totalAS1,int totalAS2,int totalREB1,int totalREB2,int totalTURN1,int totalTURN2,int totalSTL1,int totalSTL2,int totalBLK1,int totalBLK2,int totalFL1,int totalFL2,int totalFGa1,int totalFGa2,int totalFTa1,int totalFTa2,int totalTPa1,int totalTPa2,int totalFGm1,int totalFGm2,int totalFTm1,int totalFTm2,int totalTPm1,int totalTPm2){
 	printf("===========================================================================================");
-	printf("\n\tIN GAME STATS - ESTATISTICAS DENTRO DO JOGO\n\n");
+	printf("\n\t\tESTATISTICAS DENTRO DO JOGO\n\n");
 	printf("\tPPG1: %.1f\t\t PPG2: %.1f\n\n",(totalPT1*1.0)/game,(totalPT2*1.0)/game);
 	printf("\tAPG1: %.1f\t\t APG2: %.1f\n\n",Assists(totalAS1,game),Assists(totalAS2,game));
 	printf("\tREB1: %.1f\t\t REB2: %.1f\n\n",Rebounds(totalREB1,game),Rebounds(totalREB2,game));
@@ -79,18 +78,20 @@ void menu2(franquia time1,franquia time2,int game,int totalPT1,int totalPT2,int 
 	printf("\tBLK1: %.1f\t\t BLK2: %.1f\n\n",Blocks(totalBLK1,game),Blocks(totalBLK2,game));
 	printf("\tPF1: %.1f\t\t PF2: %.1f\n\n",TeamFouls(totalFL1,game),TeamFouls(totalFL2,game));
 	printf("===========================================================================================");
-	printf("\n\tATTEMPTS PER GAME - TENTATIVAS POR JOGO\n\n");
+	printf("\n\t\tTENTATIVAS POR JOGO\n\n");
 	printf("\tFGa1 = %.1f\t\t FGa2 = %.1f\n\n",FieldGoalAtp(totalFGa1,game),FieldGoalAtp(totalFGa2,game));
 	printf("\tFTa1 = %.1f\t\t FTa2 = %.1f\n\n",FreeThrowAtp(totalFTa1,game),FreeThrowAtp(totalFTa2,game));
 	printf("\tTPa1 = %.1f\t\t TPa2 = %.1f\n\n",ThreePointAtp(totalTPa1,game),ThreePointAtp(totalTPa2,game));
 	printf("===========================================================================================");
-	printf("\n\tBASKETS PER GAME - ACERTOS POR JOGO\n\n");
+	printf("\n\t\tACERTOS POR JOGO\n\n");
 	printf("\tFGm1 = %.1f\t\t FGm2 = %.1f\n\n",FieldGoalMade(totalFGm1,game),FieldGoalMade(totalFGm2,game));
 	printf("\tFTm1 = %.1f\t\t FTm2 = %.1f\n\n",FreeThrowsMade(totalFTm1,game),FreeThrowsMade(totalFTm2,game));
 	printf("\t3Pm1 = %.1f\t\t 3Pm2 = %.1f\n\n",ThreePointers(totalTPm1,game),ThreePointers(totalTPm2,game));
 	printf("===========================================================================================\n");	
-	opcao = 3;
+	printf("\nOBRIGADO POR JOGAR SimBa!!!! AGRADECEMOS SEU FEEDABACK!!!!\n\n");
+
 }
+//DEFINE O FINAL DA DETERMINADA STRING DE NOME
 void zeraString(char* s){
 	int i = 0;
 	while(*(s+i)!='\0'){
@@ -164,11 +165,6 @@ void nomeTime(char *time, int escolha, franquia* f){
 		default: NULL;
 	}
 }
-
-void printaTime(FILE *time){
-	char s;
-	while((s=fgetc(time))!=EOF) printf("%c",s);
-}
 // PRINTA O CONFRONTO ANTES DE COMECAR OS JOGOS
 void printaDuelo(franquia time1, franquia time2){
 	char s, c;
@@ -214,7 +210,7 @@ void printaDuelo(franquia time1, franquia time2){
 }
 // DISTRIBUI OS PONTOS GERADOS PACAR CADA JOGADOR
 void distribPontos(int pontosPartida,franquia *team){
-	int i = 0, k, pontos, j;
+	int i = 0, k, pontos;
 	char playerName[30], ppg[3], s;
 	char playerFile[13];
 	FILE *player;
@@ -375,6 +371,7 @@ void distribRebotes(int rebotesPartida,franquia *team){
 	
 	rewind(team->roster);
 	fclose(player);
+	
 	distribRebotes(rebotesPartida, team);
 }
 //DISTRIBUI ROUBOS DE BOLA GERADOS PARA CADA JOGADOR
@@ -613,6 +610,10 @@ void gameTime(franquia time1, franquia time2){
 		
 		//DISTRIBUI AS STATS DE ARREMESSOS COM BASE NOS PONTOS GERADOS	
 		while(TwoPm1*2 + TPm1*3 + FTm1 <= score1){
+			if(overtime != 0){
+				rangeFG += overtime*5;
+				rangeFT += overtime*4;
+			}
 			FGm1 = 41 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
 			FTm1 = 17 + pow(-1,rand())*(rand() % (2 + 1 - 0) + 0);
 			TPm1 = (FGm1*28)/100;
@@ -621,8 +622,8 @@ void gameTime(franquia time1, franquia time2){
 		
 		while(TwoPm2*2 + TPm2*3 + FTm2 <= score2){
 			if(overtime != 0){
-				rangeFG += overtime*3;
-				rangeFT += overtime*2;
+				rangeFG += overtime*5;
+				rangeFT += overtime*4;
 			}
 			FGm2 = 41 + pow(-1,rand())*(rand() % (rangeFG + 1 - 0) + 0);
 			FTm2 = 17 + pow(-1,rand())*(rand() % (rangeFT + 1 - 0) + 0);
@@ -671,10 +672,10 @@ void gameTime(franquia time1, franquia time2){
 		//RESETA PONTEIRO DOS ARQUIVOS DOS TIMES
 		rewind(time1.roster);
 		rewind(time2.roster);
-
+		
 		distribPontos(score1, &time1);
 		distribPontos(score2, &time2);
-		
+
 		rewind(time1.roster);
 		rewind(time2.roster);
 	
@@ -742,22 +743,26 @@ void gameTime(franquia time1, franquia time2){
 			printf("===========================================================================================\n");
 			printf("\t\t##########  %s GANHOU (%d-%d)  ##########\n",time2.nome,winA,winH);
 			printf("===========================================================================================\n\n");
-			printf("[1] Estatisticas avancadas da serie\n[2] Sair ");
+			printf("[1] Estatisticas avancadas da serie\n[2] Sair\n");
 			printf("\n-> Opção: ");
 			scanf("%d", &opcao);
 			if(opcao == 1){
 				menu2(time1,time2,game,totalPT1,totalPT2,totalAS1,totalAS2,totalREB1,totalREB2,totalTURN1,totalTURN2,totalSTL1,totalSTL2,totalBLK1,totalBLK2,totalFL1,totalFL2,totalFGa1,totalFGa2,totalFTa1,totalFTa2,totalTPa1,totalTPa2,totalFGm1,totalFGm2,totalFTm1,totalFTm2,totalTPm1,totalTPm2);
+			}else{
+				printf("\nOBRIGADO POR JOGAR SimBa!!!! AGRADECEMOS SEU FEEDABACK!!!!\n\n");
 			}
 			break;
 		}else if(winH == 4){
 			printf("===========================================================================================\n");
 			printf("\t\t##########  %s GANHOU (%d-%d)  ##########\n",time1.nome,winH,winA);			
 			printf("===========================================================================================\n");
-			printf("[1] Estatisticas avancadas da serie\n[2] Sair ");
+			printf("[1] Estatisticas avancadas da serie\n[2] Sair\n");
 			printf("\n-> Opção: ");
 			scanf("%d", &opcao);
 			if(opcao == 1){		
-	menu2(time1,time2,game,totalPT1,totalPT2,totalAS1,totalAS2,totalREB1,totalREB2,totalTURN1,totalTURN2,totalSTL1,totalSTL2,totalBLK1,totalBLK2,totalFL1,totalFL2,totalFGa1,totalFGa2,totalFTa1,totalFTa2,totalTPa1,totalTPa2,totalFGm1,totalFGm2,totalFTm1,totalFTm2,totalTPm1,totalTPm2);
+				menu2(time1,time2,game,totalPT1,totalPT2,totalAS1,totalAS2,totalREB1,totalREB2,totalTURN1,totalTURN2,totalSTL1,totalSTL2,totalBLK1,totalBLK2,totalFL1,totalFL2,totalFGa1,totalFGa2,totalFTa1,totalFTa2,totalTPa1,totalTPa2,totalFGm1,totalFGm2,totalFTm1,totalFTm2,totalTPm1,totalTPm2);
+			}else{
+				printf("\nOBRIGADO POR JOGAR SimBa!!!! AGRADECEMOS SEU FEEDABACK!!!!\n\n");
 			}
 			break;	
 		}
@@ -765,4 +770,3 @@ void gameTime(franquia time1, franquia time2){
 		
 	}
 }
-
