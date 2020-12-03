@@ -726,7 +726,7 @@ void gameTime(franquia time1, franquia time2){
 			printf("===========================================================================================\n");
 			printf("\t\t##########  %s GANHOU (%d-%d)  ##########\n",time2.nome,winA,winH);
 			printf("===========================================================================================\n\n");
-			printf("[1] Estatisticas avancadas da serie\n[2] Voltar para o menu ");
+			printf("[1] Estatisticas avancadas da serie\n[2] Sair ");
 			printf("\n-> Opção: ");
 			scanf("%d", &opcao);
 			if(opcao == 1){
@@ -737,7 +737,7 @@ void gameTime(franquia time1, franquia time2){
 			printf("===========================================================================================\n");
 			printf("\t\t##########  %s GANHOU (%d-%d)  ##########\n",time1.nome,winH,winA);			
 			printf("===========================================================================================\n");
-			printf("[1] Estatisticas avancadas da serie\n[2] Voltar para o menu ");
+			printf("[1] Estatisticas avancadas da serie\n[2] Sair ");
 			printf("\n-> Opção: ");
 			scanf("%d", &opcao);
 			if(opcao == 1){		
