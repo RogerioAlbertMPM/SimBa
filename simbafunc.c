@@ -76,7 +76,7 @@ void menu2(franquia time1,franquia time2,int game,int totalPT1,int totalPT2,int 
 	printf("\tFGm1 = %.1f\t\t FGm2 = %.1f\n\n",FieldGoalMade(totalFGm1,game),FieldGoalMade(totalFGm2,game));
 	printf("\tFTm1 = %.1f\t\t FTm2 = %.1f\n\n",FreeThrowsMade(totalFTm1,game),FreeThrowsMade(totalFTm2,game));
 	printf("\t3Pm1 = %.1f\t\t 3Pm2 = %.1f\n\n",ThreePointers(totalTPm1,game),ThreePointers(totalTPm2,game));
-	printf("===========================================================================================");	
+	printf("===========================================================================================\n");	
 	opcao = 3;
 }
 void zeraString(char* s){
@@ -221,6 +221,7 @@ void distribPontos(int pontosPartida,franquia *team){
 			}
 			j++;
 		}
+		team->TIME[i].nome[j+1] = '\0';
 		
 		strcpy(playerFile, "./Jogadores/");
 		strcat(playerName, ".txt");
@@ -354,7 +355,7 @@ void distribRebotes(int rebotesPartida,franquia *team){
 			}
 			
 			if(rebotes < 0) rebotes = 0;
-			if(atoi(rpg) - 4 >= rebotesPartida) rebotes = 0;
+			if(atoi(rpg) - 4 >= rebotesPartida) rebotes = 1;
 		}while(rebotes > rebotesPartida);	
 
 		rebotesPartida -= rebotes;
@@ -548,6 +549,7 @@ void distribTurns(int turnosPartida,franquia *team){
 
 //A SIMULACAO
 void gameTime(franquia time1, franquia time2){
+	int overtime = 0, rangeFG = 4, rangeFT = 2;
 	int game = 1,winA = 0,winH = 0,score1,score2,extraPoints1,extraPoints2;
 	int assists1, assists2,rebote1,rebote2,turno1,turno2,steals1,steals2;
 	int blocks1,blocks2,fouls1,fouls2;
@@ -570,6 +572,7 @@ void gameTime(franquia time1, franquia time2){
 			printf("\t\t\t*******OVERTIME*******\n\n");
 			score1 = rand() % ((score1+10) + 1 - score1) + score1;
 			score2 = rand() % ((score2+10) + 1 - score2) + score2;		
+			overtime += 1;
 		}
 		
 		printf("\t%s \t %d\tX   ", time2.nome, score1);
@@ -609,8 +612,12 @@ void gameTime(franquia time1, franquia time2){
 		} 
 		
 		while(TwoPm2*2 + TPm2*3 + FTm2 <= score2){
-			FGm2 = 41 + pow(-1,rand())*(rand() % (4 + 1 - 0) + 0);
-			FTm2 = 17 + pow(-1,rand())*(rand() % (2 + 1 - 0) + 0);
+			if(overtime != 0){
+				rangeFG += overtime*3;
+				rangeFT += overtime*2;
+			}
+			FGm2 = 41 + pow(-1,rand())*(rand() % (rangeFG + 1 - 0) + 0);
+			FTm2 = 17 + pow(-1,rand())*(rand() % (rangeFT + 1 - 0) + 0);
 			TPm2 = (FGm2*28)/100;
 			TwoPm2 = FGm2 - TPm2;
 		}//CASO O NUMERO GERADO PASSE DO SCORE1 OU SCORE2 
@@ -659,7 +666,7 @@ void gameTime(franquia time1, franquia time2){
 
 		distribPontos(score1, &time1);
 		distribPontos(score2, &time2);
-	
+		
 		rewind(time1.roster);
 		rewind(time2.roster);
 	
@@ -689,6 +696,7 @@ void gameTime(franquia time1, franquia time2){
 	
 		distribTurns(turno1, &time1);
 		distribTurns(turno2, &time2);
+		
 		//PRINTA A PERFORMANCE DOS JOGADORES NO DETERMINADO JOGO
 		for(int r = 0; r<5;r++) printf("\t%s: %d PTS %d AST %d REB %d STL %d BLK %d TO\n", time1.TIME[r].nome, time1.TIME[r].score, time1.TIME[r].assists, time1.TIME[r].rebounds, time1.TIME[r].steals, time1.TIME[r].blocks, time1.TIME[r].turnovers);
 		printf("\n");
