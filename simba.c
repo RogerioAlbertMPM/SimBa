@@ -66,6 +66,9 @@ int main(){
 		
 	home.roster = fopen(hTeam, "r");
 	away.roster = fopen(aTeam, "r");
+	
+	nomes(&home);
+	nomes(&away);
 		
 	printaDuelo(home, away);
 	gameTime(home, away);
