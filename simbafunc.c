@@ -5,6 +5,18 @@
 #include <math.h>
 #include "simbafunc.h"
 
+void nomes(franquia* f){
+	int i;
+	for(i=0;i<5;i++) zeraString(f->TIME[i].nome);
+	
+	i=0;
+	while(i<5){
+		fscanf(f->roster, "%[^\n]%*c", f->TIME[i].nome);
+		i++;
+	}
+}
+
+
 //TOTAL DE ACERTOS SER SER LANCES LIVRES POR JOGOS JOGADOS
 float FieldGoalMade(int shotsmade, int totalgames){
 	return (shotsmade*1.0)/totalgames;
@@ -96,7 +108,6 @@ void iniciaEstatisticas(franquia *time){
 		time->TIME[i].steals = 0;
 		time->TIME[i].blocks = 0;
 		time->TIME[i].turnovers = 0;
-		zeraString(time->TIME[i].nome);
 	}
 }
 //MENU DE ESCOLHA DE TIMES PARA SIMULACAO
@@ -212,16 +223,13 @@ void distribPontos(int pontosPartida,franquia *team){
 			
 		zeraString(playerName);
 		k = 0;
-		j=0;	
+			
 		while((s=fgetc(team->roster))!= '\n'){ //pegar o nome do jogador sem espaco pra poder abrir o arquivo
-		 	team->TIME[i].nome[j] = s;
 		 	if(s != ' '){
 				playerName[k] = s;
 				k++;
 			}
-			j++;
 		}
-		team->TIME[i].nome[j+1] = '\0';
 		
 		strcpy(playerFile, "./Jogadores/");
 		strcat(playerName, ".txt");
