@@ -1,6 +1,6 @@
 //TAD das funcoes do SimBa
 typedef struct{
-	char nome[30];
+	char *nome;
 	int score, assists, rebounds, steals, blocks, turnovers;
 }jogador;
 
